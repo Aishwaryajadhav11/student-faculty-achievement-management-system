@@ -1,5 +1,11 @@
 # 🎓 Student–Faculty Achievement Management System
 
+![PHP](https://img.shields.io/badge/Backend-PHP-blue)
+![MySQL](https://img.shields.io/badge/Database-MySQL-orange)
+![HTML](https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS-red)
+![Status](https://img.shields.io/badge/Project-Completed-brightgreen)
+![License](https://img.shields.io/badge/License-Academic-lightgrey)
+
 A web-based application designed to digitally manage, verify, and showcase **student and faculty achievements** within an educational institution.
 
 > 🚀 This system replaces manual record-keeping with a secure, transparent, and centralized platform.
@@ -111,6 +117,18 @@ Mobile application integration
 
 ### 👩‍💻 Author
 https://github.com/Aishwaryajadhav11
+
 🎓 Engineering Student
+
 💻 Interested in Web Development & Software Engineering
+
+### 🌟Support
+
+If you like this project:
+
+⭐ Star this repository
+
+🍴 Fork it
+
+💬 Share your feedback
 
