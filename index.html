@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student & Faculty Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #0b3c68 0%, #1c5a9e 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: rgba(18, 77, 132, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      width: 90%;
+      max-width: 450px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      transform: rotate(0deg);
+      transition: transform 1.5s linear;
+      pointer-events: none;
+    }
+    
+    h1 {
+      margin-bottom: 30px;
+      font-weight: 700;
+      font-size: 28px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    
+    h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+    
+    .role-selection {
+      margin: 25px 0;
+    }
+    
+    .role-label {
+      display: block;
+      text-align: left;
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 18px;
+    }
+    
+    .role-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .role-option {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .role-option:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(5px);
+    }
+    
+    .role-option.active {
+      background: rgba(0, 0, 0, 0.3);
+      border-color: #00c6ff;
+      box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
+    }
+    
+    .role-option i {
+      margin-right: 15px;
+      font-size: 22px;
+      width: 30px;
+    }
+    
+    .role-option .role-text {
+      flex: 1;
+      text-align: left;
+    }
+    
+    .role-option .role-title {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 3px;
+    }
+    
+    .role-option .role-desc {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    
+    .continue-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(90deg, #000000 0%, #2d2d2d 100%);
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .continue-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .continue-btn:hover::before {
+      left: 100%;
+    }
+    
+    .continue-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .continue-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 198, 255, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 198, 255, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 198, 255, 0);
+      }
+    }
+    
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00c6ff;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      opacity: 1;
+    }
+    
+    @media (max-width: 500px) {
+      .container {
+        padding: 25px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      .role-option {
+        padding: 12px 15px;
+      }
+      
+      .role-option .role-title {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo-svkm -->
+    <img src="./images/logo svkm.jpg" alt="My Logo" width="150" height="auto">
+    <h1>Student & Faculty Achievement</h1>
+    
+    <div class="role-selection">
+      <span class="role-label">Select Your Role:</span>
+      <div class="role-options">
+        <div class="role-option active" data-value="student">
+          <i class="fas fa-user-graduate"></i>
+          <div class="role-text">
+            <div class="role-title">Student</div>
+          </div>
+          <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <div class="role-option" data-value="faculty">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <div class="role-text">
+            <div class="role-title">Faculty</div>
+          </div>
+          <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <div class="role-option" data-value="admin">
+          <i class="fas fa-user-cog"></i>
+          <div class="role-text">
+            <div class="role-title">Administrator</div>
+          </div>
+          <i class="fas fa-check-circle"></i>
+        </div>
+      </div>
+    </div>
+    
+    <button class="continue-btn pulse" onclick="goToPage()">
+      Continue as <span id="selected-role">Student</span> <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+  
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i> Redirecting to <span id="redirect-target">Student</span> authentication...
+  </div>
+
+  <script>
+    // Set up role selection
+    const roleOptions = document.querySelectorAll('.role-option');
+    let selectedRole = 'student';
+    
+    roleOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        // Remove active class from all options
+        roleOptions.forEach(opt => opt.classList.remove('active'));
+        
+        // Add active class to clicked option
+        option.classList.add('active');
+        
+        // Update selected role
+        selectedRole = option.getAttribute('data-value');
+        
+        // Update button text
+        const roleName = option.querySelector('.role-title').textContent;
+        document.getElementById('selected-role').textContent = roleName;
+      });
+    });
+    
+    // Enhanced goToPage function with notification
+    function goToPage() {
+      // Show notification
+      const notification = document.getElementById('notification');
+      const redirectTarget = document.getElementById('redirect-target');
+      
+      let targetPage = '';
+      let roleName = '';
+      
+      if (selectedRole === "student") {
+        targetPage = "student_auth.php";
+        roleName = "Student";
+      } else if (selectedRole === "faculty") {
+        targetPage = "faculty_auth.php";
+        roleName = "Faculty";
+      } else if (selectedRole === "admin") {
+        targetPage = "admin.html";
+        roleName = "Administrator";
+      }
+      
+      redirectTarget.textContent = roleName;
+      notification.classList.add('show');
+      
+      // Redirect after a brief delay to show the notification
+      setTimeout(() => {
+        window.location.href = targetPage;
+      }, 500);
+    }
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const currentIndex = Array.from(roleOptions).findIndex(opt => opt.classList.contains('active'));
+        let nextIndex;
+        
+        if (e.key === 'ArrowDown') {
+          nextIndex = (currentIndex + 1) % roleOptions.length;
+        } else {
+          nextIndex = (currentIndex - 1 + roleOptions.length) % roleOptions.length;
+        }
+        
+        roleOptions[currentIndex].classList.remove('active');
+        roleOptions[nextIndex].classList.add('active');
+        
+        selectedRole = roleOptions[nextIndex].getAttribute('data-value');
+        const roleName = roleOptions[nextIndex].querySelector('.role-title').textContent;
+        document.getElementById('selected-role').textContent = roleName;
+      } else if (e.key === 'Enter') {
+        goToPage();
+      }
+    });
+  </script>
+</body>
+</html>
