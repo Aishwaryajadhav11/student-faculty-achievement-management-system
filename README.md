@@ -8,7 +8,7 @@
 
 A web-based application designed to digitally manage, verify, and showcase **student and faculty achievements** within an educational institution.
 
-> 🚀 This system replaces manual record-keeping with a secure, transparent, and centralized platform.
+> 🚀 ✨This system replaces manual record-keeping with a secure, transparent, and centralized platform.
 
 ---
 
