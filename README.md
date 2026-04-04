@@ -22,7 +22,7 @@ The **Student–Faculty Achievement Management System** solves this problem by p
 ## ✨ Key Features
 
 ### 👨‍🎓 Student Module
-- Secure student registration & login
+- Secure student registration & login:-
 - Upload achievements (PDF / DOCX)
 - Track achievement approval status
 
